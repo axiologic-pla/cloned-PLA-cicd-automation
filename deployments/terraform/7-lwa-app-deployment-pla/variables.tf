@@ -55,3 +55,13 @@ variable "timestamp" {
   type    = string
   default = ""
 }
+
+variable "lwa_repo" {
+  type    = string
+  default = ""
+}
+
+variable "lwa_branch" {
+  type    = string
+  default = ""
+}

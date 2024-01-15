@@ -30,6 +30,9 @@ GTO_TOTAL_WAIT_TIME="${16}"
 
 TIMESTAMP="${17}"
 
+LWA_REPO="${18}"
+LWA_BRANCH="${19}"
+
 DEPLOYMENT_NAME="LWA"
 
 FQDN=$DNS_DOMAIN
@@ -60,6 +63,8 @@ total_wait_time     = ${TOTAL_WAIT_TIME}
 gto_time_per_call   = ${GTO_TIME_PER_CALL}
 gto_total_wait_time = ${GTO_TOTAL_WAIT_TIME}
 timestamp           = ${TIMESTAMP}
+lwa_repo            = "${LWA_REPO}"
+lwa_branch          = "${LWA_BRANCH}"
 EOF
 
 terraform init -reconfigure \
