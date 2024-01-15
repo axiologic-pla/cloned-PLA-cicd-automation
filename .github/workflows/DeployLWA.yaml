@@ -119,8 +119,6 @@ jobs:
       - name: 'Add version to LWA objects'
         run: |
           cd ./LWA
-
-          echo "TIMESTAMP=$(/bin/bash ../automation/deployments/terraform/${{ env.CICD_DEPLOYMENT_NAME }}/add-object-version.sh ${{ env.LWA_APP_BUILD_VERSION }})" >> $GITHUB_ENV
           
           # change the name of the app directory
           mv app ${{ env.LWA_APP_BUILD_VERSION }}
@@ -157,7 +155,6 @@ jobs:
             "${{ env.LWA_TOTAL_WAIT_TIME }}" \
             "${{ env.LWA_GTO_TIME_PER_CALL }}" \
             "${{ env.LWA_GTO_TOTAL_WAIT_TIME }}" \
-            "${{ env.TIMESTAMP }}" \
             "${{ env.LWA_REPO }}" \
             "${{ env.LWA_BRANCH }}"
 
