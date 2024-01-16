@@ -1,7 +1,7 @@
 aws_region          = "eu-west-1"
 dns_domain          = "platest.eu"
 epi_domain          = "preqa.epi"
-app_build_version   = "Test1.0"
+app_build_version   = "Test1.1"
 network_name        = "lpwa"
 bdns_json_url       = "https://raw.githubusercontent.com/PharmaLedger-IMI/mobile-bdns/master/bdns.json"
 hostname            = "lpwa"
