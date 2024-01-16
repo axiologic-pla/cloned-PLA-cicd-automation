@@ -6,7 +6,7 @@ resource "aws_s3_object" "bdns_json" {
   ]
 
   bucket        = module.s3_bucket.s3_bucket_id
-  key           = local.bdns_json_filename
+  key           = "bdns.json"
   source        = "${path.module}/bdns.json"
   etag          = md5(local_file.bdns_json.content)
   content_type  = "application/json"
@@ -19,7 +19,7 @@ resource "aws_s3_object" "environment_js" {
   ]
 
   bucket        = module.s3_bucket.s3_bucket_id
-  key           = local.environment_js_filename
+  key           = "environment.js"
   source        = "${path.module}/environment.js"
   etag          = md5(local_file.environment_js.content)
   content_type  = "application/javascript; charset=utf-8"
