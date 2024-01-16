@@ -19,18 +19,4 @@ locals {
 
   bdns_json_url_specified = var.bdns_json_url == "" ? false : true
   bdns_json_local_path    = "../networks/${var.network_name}/bdns.json"
-
-  cloudfront_default_root_object = one(fileset("${path.module}/LWA", "index-*.html"))
-
-  custom_error_response_4xx = flatten([
-    for error_code in [400, 403, 404, 405, 414, 416] : [
-      {
-        error_code            = error_code
-        error_caching_min_ttl = 10
-
-        response_code      = error_code
-        response_page_path = "/4xx-errors/index.html"
-      }
-    ]
-  ])
 }
