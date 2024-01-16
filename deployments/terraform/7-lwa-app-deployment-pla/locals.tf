@@ -14,8 +14,8 @@ locals {
 
   csp_connect_src = local.bdns_json_url_specified ? "${var.bdns_json_url} https://${local.fqdn} ${join(" ", [for url in distinct(regexall("https://[^\"/]+", data.http.bdns_json[0].response_body)) : url])}" : "https://${local.fqdn} ${join(" ", [for url in distinct(regexall("https://[^\"/]+", file(local.bdns_json_local_path))) : url])}"
 
-  s3_object_js   = setsubtract(fileset("${path.module}/LWA", "**/*.js"), ["environment.js"])
-  s3_object_json = setsubtract(fileset("${path.module}/LWA", "**/*.json"), ["bdns.json"])
+  s3_object_js   = setsubtract(fileset("${path.module}/LWA", "**/*.js"), ["environment.js", "local_environment.js"])
+  s3_object_json = setsubtract(fileset("${path.module}/LWA", "**/*.json"), ["bdns.json", "package.json", "octopus.json", "lib/zxing-wrapper/package.json"])
 
   bdns_json_url_specified = var.bdns_json_url == "" ? false : true
   bdns_json_local_path    = "../networks/${var.network_name}/bdns.json"
