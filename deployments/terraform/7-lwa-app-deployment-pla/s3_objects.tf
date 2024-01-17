@@ -111,6 +111,7 @@ resource "aws_s3_object" "gif" {
   source       = "${path.module}/LWA/${each.value}"
   etag         = filemd5("${path.module}/LWA/${each.value}")
   content_type = "image/gif"
+  cache_control = "public, max-age=15768000"
 }
 
 resource "aws_s3_object" "woff" {
