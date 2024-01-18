@@ -114,6 +114,17 @@ resource "aws_s3_object" "gif" {
   cache_control = "max-age=86400, must-revalidate"
 }
 
+resource "aws_s3_object" "ico" {
+  for_each = fileset("${path.module}/LWA", "**/*.ico")
+
+  bucket       = module.s3_bucket.s3_bucket_id
+  key          = each.value
+  source       = "${path.module}/LWA/${each.value}"
+  etag         = filemd5("${path.module}/LWA/${each.value}")
+  content_type = "image/x-icon"
+  cache_control = "max-age=86400, must-revalidate"
+}
+
 resource "aws_s3_object" "woff" {
   for_each = fileset("${path.module}/LWA", "**/*.woff")
 
@@ -144,5 +155,16 @@ resource "aws_s3_object" "ttf" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "application/octet-stream"
+  cache_control = "max-age=86400, must-revalidate"
+}
+
+resource "aws_s3_object" "manifest" {
+  for_each = fileset("${path.module}/LWA", "**/*.webmanifest")
+
+  bucket        = module.s3_bucket.s3_bucket_id
+  key           = each.value
+  source        = "${path.module}/LWA/${each.value}"
+  etag          = filemd5("${path.module}/LWA/${each.value}")
+  content_type  = "application/manifest+json"
   cache_control = "max-age=86400, must-revalidate"
 }
