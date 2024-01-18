@@ -23,7 +23,7 @@ resource "aws_s3_object" "environment_js" {
   source        = "${path.module}/environment.js"
   etag          = md5(local_file.environment_js.content)
   content_type  = "application/javascript; charset=utf-8"
-  cache_control = "max-age=3600, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "html" {
