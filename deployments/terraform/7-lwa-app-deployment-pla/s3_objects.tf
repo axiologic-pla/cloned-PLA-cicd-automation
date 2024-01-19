@@ -10,7 +10,7 @@ resource "aws_s3_object" "bdns_json" {
   source        = "${path.module}/bdns.json"
   etag          = md5(local_file.bdns_json.content)
   content_type  = "application/json"
-  cache_control = "max-age=3600, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "environment_js" {
@@ -34,7 +34,7 @@ resource "aws_s3_object" "html" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "text/html; charset=utf-8"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "svg" {
@@ -45,7 +45,7 @@ resource "aws_s3_object" "svg" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "image/svg+xml"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "css" {
@@ -56,7 +56,7 @@ resource "aws_s3_object" "css" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "text/css"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "js" {
@@ -67,7 +67,7 @@ resource "aws_s3_object" "js" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "application/javascript; charset=utf-8"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "json" {
@@ -78,7 +78,7 @@ resource "aws_s3_object" "json" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "application/json"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "png" {
@@ -89,7 +89,7 @@ resource "aws_s3_object" "png" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "image/png"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "jpg" {
@@ -100,7 +100,7 @@ resource "aws_s3_object" "jpg" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "image/jpg"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "gif" {
@@ -111,7 +111,7 @@ resource "aws_s3_object" "gif" {
   source       = "${path.module}/LWA/${each.value}"
   etag         = filemd5("${path.module}/LWA/${each.value}")
   content_type = "image/gif"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "ico" {
@@ -122,7 +122,7 @@ resource "aws_s3_object" "ico" {
   source       = "${path.module}/LWA/${each.value}"
   etag         = filemd5("${path.module}/LWA/${each.value}")
   content_type = "image/x-icon"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "woff" {
@@ -133,7 +133,7 @@ resource "aws_s3_object" "woff" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "font/woff"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "woff2" {
@@ -144,7 +144,7 @@ resource "aws_s3_object" "woff2" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "font/woff2"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "ttf" {
@@ -155,7 +155,7 @@ resource "aws_s3_object" "ttf" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "application/octet-stream"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "manifest" {
@@ -166,5 +166,5 @@ resource "aws_s3_object" "manifest" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "application/manifest+json"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=0, must-revalidate"
 }
