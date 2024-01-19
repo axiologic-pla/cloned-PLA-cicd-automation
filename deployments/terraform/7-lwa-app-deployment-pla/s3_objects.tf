@@ -122,7 +122,7 @@ resource "aws_s3_object" "ico" {
   source       = "${path.module}/LWA/${each.value}"
   etag         = filemd5("${path.module}/LWA/${each.value}")
   content_type = "image/x-icon"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=2629800, must-revalidate"
 }
 
 resource "aws_s3_object" "ttf" {
@@ -133,7 +133,7 @@ resource "aws_s3_object" "ttf" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "application/octet-stream"
-  cache_control = "max-age=86400, must-revalidate"
+  cache_control = "max-age=2629800, must-revalidate"
 }
 
 resource "aws_s3_object" "manifest" {
