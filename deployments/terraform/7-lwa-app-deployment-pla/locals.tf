@@ -23,7 +23,7 @@ locals {
   cloudfront_default_root_object = "index.html"
 
   custom_error_response_4xx = flatten([
-    for error_code in [400, 403, 404, 405, 414, 416, 500, 501, 502, 503, 504] : [
+    for error_code in [400, 403, 404, 405, 413, 414, 416, 494, 500, 501, 502, 503, 504] : [
       {
         error_code            = error_code
         error_caching_min_ttl = 10
