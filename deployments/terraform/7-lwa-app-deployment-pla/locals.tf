@@ -23,13 +23,13 @@ locals {
   cloudfront_default_root_object = "index.html"
 
   custom_error_response_4xx = flatten([
-    for error_code in [400, 403, 404, 405, 414, 416] : [
+    for error_code in [400, 403, 404, 405, 414, 416, 500, 501, 502, 503, 504] : [
       {
         error_code            = error_code
         error_caching_min_ttl = 10
 
         response_code      = error_code
-        response_page_path = "/4xx-errors/index.html"
+        response_page_path = (error_code == 403 || error_code == 404) ? "/404-errors/index.html" : "/4xx-errors/index.html"
       }
     ]
   ])
