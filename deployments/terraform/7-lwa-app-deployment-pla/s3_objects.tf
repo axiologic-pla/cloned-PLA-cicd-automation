@@ -122,29 +122,7 @@ resource "aws_s3_object" "ico" {
   source       = "${path.module}/LWA/${each.value}"
   etag         = filemd5("${path.module}/LWA/${each.value}")
   content_type = "image/x-icon"
-  cache_control = "max-age=0, must-revalidate"
-}
-
-resource "aws_s3_object" "woff" {
-  for_each = fileset("${path.module}/LWA", "**/*.woff")
-
-  bucket        = module.s3_bucket.s3_bucket_id
-  key           = each.value
-  source        = "${path.module}/LWA/${each.value}"
-  etag          = filemd5("${path.module}/LWA/${each.value}")
-  content_type  = "font/woff"
-  cache_control = "max-age=0, must-revalidate"
-}
-
-resource "aws_s3_object" "woff2" {
-  for_each = fileset("${path.module}/LWA", "**/*.woff2")
-
-  bucket        = module.s3_bucket.s3_bucket_id
-  key           = each.value
-  source        = "${path.module}/LWA/${each.value}"
-  etag          = filemd5("${path.module}/LWA/${each.value}")
-  content_type  = "font/woff2"
-  cache_control = "max-age=0, must-revalidate"
+  cache_control = "max-age=86400, must-revalidate"
 }
 
 resource "aws_s3_object" "ttf" {
@@ -155,7 +133,7 @@ resource "aws_s3_object" "ttf" {
   source        = "${path.module}/LWA/${each.value}"
   etag          = filemd5("${path.module}/LWA/${each.value}")
   content_type  = "application/octet-stream"
-  cache_control = "max-age=0, must-revalidate"
+  cache_control = "max-age=86400, must-revalidate"
 }
 
 resource "aws_s3_object" "manifest" {
