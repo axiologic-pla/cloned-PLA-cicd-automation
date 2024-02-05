@@ -1,4 +1,0 @@
-deployment: 
-  company: "demo"
-  network_name: "preqa"
-  enode_address: "52.213.155.18"
