@@ -28,3 +28,7 @@ variable "github_read_write_token" {
 variable "helm_chart_version" {
   type = string
 }
+
+variable "organization" {
+  type = string
+}

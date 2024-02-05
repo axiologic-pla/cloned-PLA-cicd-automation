@@ -99,3 +99,10 @@ variable "client_secret" {
 variable "logout_url" {
   type = string
 }
+
+variable "organization" {
+  type = string
+}
+variable "helm_charts_branch" {
+  type = string
+}

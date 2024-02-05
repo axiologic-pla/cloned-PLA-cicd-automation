@@ -1,9 +1,9 @@
 # --- 6-epi-app-deployment-pla/locals.tf ---
 
 locals {
-  https_url_eth_values_yaml        = "https://raw.githubusercontent.com/pharmaledgerassoc/helm-charts/ethadapter-${var.ethadapter_helm_chart_version}/charts/ethadapter/values.yaml"
-  https_url_helm_charts_repository = "https://pharmaledgerassoc.github.io/helm-charts"
-  https_url_apihub_json_template   = "https://raw.githubusercontent.com/pharmaledgerassoc/epi-workspace/master/apihub-root/external-volume/config/apihub.json.template"
+  https_url_eth_values_yaml        = "https://raw.githubusercontent.com/${var.organization}/helm-charts/ethadapter-${var.ethadapter_helm_chart_version}/charts/ethadapter/values.yaml"
+  https_url_helm_charts_repository = "https://${var.organization}.github.io/helm-charts"
+  https_url_apihub_json_template   = "https://raw.githubusercontent.com/${var.organization}/epi-workspace/${var.helm_charts_branch}/apihub-root/external-volume/config/apihub.json.template"
 
   tmp_folder_path = regex("TMP_FOLDER_PATH=(.+)", data.local_file.config_context_sh.content)[0]
 

@@ -1,7 +1,7 @@
 # --- 4-quorum-node-pla/locals.tf ---
 
 locals {
-  https_url_helm_charts_repository = "https://pharmaledgerassoc.github.io/helm-charts"
+  https_url_helm_charts_repository = "https://${var.organization}.github.io/helm-charts"
 
   tmp_folder_path   = regex("TMP_FOLDER_PATH=(.+)", data.local_file.config_context_sh.content)[0]
   genesis_geth_path = regex("genesisGethPath=(.+)", data.local_file.config_context_sh.content)[0]

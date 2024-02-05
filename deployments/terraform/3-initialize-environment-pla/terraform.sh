@@ -12,6 +12,8 @@ GIT_REPOSITORY_NAME="${7}"
 
 QUORUM_NODE_HELM_CHART_VERSION="${8}"
 
+ORGANIZATION="${9}"
+
 DEPLOYMENT_NAME="3-initialize-environment"
 
 BACKEND_CONFIG_DIRECTORY_PATH="../../../../private"
@@ -37,7 +39,8 @@ terraform $ACTION --auto-approve \
   -var net_dir_path="${NETWORKS_CONFIG_DIRECTORY_PATH}/${NETWORK_NAME}" \
   -var github_repository_name="${GIT_REPOSITORY_NAME}" \
   -var github_read_write_token="${GH_TOKEN}" \
-  -var helm_chart_version="${QUORUM_NODE_HELM_CHART_VERSION}"
+  -var helm_chart_version="${QUORUM_NODE_HELM_CHART_VERSION}" \
+  -var organization="${ORGANIZATION}"
 
 TERRAFORM_RUN_EXIT_CODE=$(echo $?)
 

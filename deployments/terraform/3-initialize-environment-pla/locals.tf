@@ -1,7 +1,7 @@
 # --- 3-initialize-environment-pla/locals.tf ---
 
 locals {
-  https_url_qn_values_yaml = "https://raw.githubusercontent.com/pharmaledgerassoc/helm-charts/quorum-node-${var.helm_chart_version}/charts/quorum-node/values.yaml"
+  https_url_qn_values_yaml = "https://raw.githubusercontent.com/${var.organization}/helm-charts/quorum-node-${var.helm_chart_version}/charts/quorum-node/values.yaml"
 
   tmp_folder_path     = regex("TMP_FOLDER_PATH=(.+)", data.local_file.config_context_sh.content)[0]
   new_network_service = regex("newNetworkService=(.+)", data.local_file.config_context_sh.content)[0]

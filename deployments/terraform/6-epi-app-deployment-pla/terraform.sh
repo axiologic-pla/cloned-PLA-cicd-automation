@@ -46,6 +46,9 @@ LOGOUT_URL="${29}"
 CLIENT_ID="${30}"
 CLIENT_SECRET="${31}"
 
+ORGANIZATION="${32}"
+HELM_CHARTS_BRANCH="${33}"
+
 DEPLOYMENT_NAME="6-epi-app-deployment-pla"
 
 KUBE_CONFIG_PATH="~/.kube/config"
@@ -93,8 +96,11 @@ token_endpoint = "${TOKEN_ENDPOINT}"
 logout_url = "${LOGOUT_URL}" 
 client_id = "${CLIENT_ID}" 
 client_secret = "${CLIENT_SECRET}" 
-ethadapter_helm_chart_version = "${ETH_ADAPTER_HELM_CHART_VERSION}" 
+ethadapter_helm_chart_version = "${ETH_ADAPTER_HELM_CHART_VERSION}"
 epi_helm_chart_version = "${EPI_HELM_CHART_VERSION}"
+
+organization = "${ORGANIZATION}"
+helm_charts_branch = "${HELM_CHARTS_BRANCH}"
 EOF
 
 terraform init -reconfigure \
