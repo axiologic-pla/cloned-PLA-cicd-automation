@@ -1,3 +1,0 @@
-# overwrites service
-service:
-  type: ClusterIP
