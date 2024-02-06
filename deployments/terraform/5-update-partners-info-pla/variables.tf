@@ -18,7 +18,3 @@ variable "kube_config_path" {
 variable "github_read_write_token" {
   type = string
 }
-
-variable "organization" {
-  type = string
-}

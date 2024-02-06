@@ -9,8 +9,6 @@ export GH_TOKEN="${4}"
 GIT_USERNAME="${5}"
 GIT_EMAIL="${6}"
 
-ORGANIZATION="${7}"
-
 DEPLOYMENT_NAME="5-update-partners-info-pla"
 
 KUBE_CONFIG_PATH="~/.kube/config"
@@ -34,8 +32,7 @@ terraform $ACTION --auto-approve \
   -var env_dir_path="${BACKEND_CONFIG_DIRECTORY_PATH}/${NETWORK_NAME}/${CLUSTER_NAME}" \
   -var net_dir_path="${NETWORKS_CONFIG_DIRECTORY_PATH}/${NETWORK_NAME}" \
   -var kube_config_path="${KUBE_CONFIG_PATH}" \
-  -var github_read_write_token="${GH_TOKEN}" \
-  -var organization="${ORGANIZATION}"
+  -var github_read_write_token="${GH_TOKEN}"
 
 TERRAFORM_RUN_EXIT_CODE=$(echo $?)
 

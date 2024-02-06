@@ -94,5 +94,4 @@ jobs:
            "${{ env.CLUSTER_NAME }}" \
            "${{ env.CICD_DEPLOYMENT_TOKEN }}" \
            "${{ env.GIT_USERNAME }}" \
-           "${{ env.GIT_EMAIL }}" \
-           "${{ github.repository_owner }}"
+           "${{ env.GIT_EMAIL }}"
