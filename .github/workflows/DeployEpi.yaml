@@ -98,7 +98,7 @@ env:
   CLIENT_ID: ${{ secrets.CLIENT_ID }}
   CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
 
-  HELM_CHARTS_BRANCH: ${{ var.HELM_CHARTS_BRANCH }}
+  HELM_CHARTS_BRANCH: ${{ vars.HELM_CHARTS_BRANCH }}
 
 permissions:
   id-token: write # This is required for requesting the JWT
