@@ -43,7 +43,9 @@ cd $BACKEND_CONFIG_DIRECTORY_PATH
 git add -- "./${NETWORK_NAME}/${CLUSTER_NAME}"
 git commit -m "Managed by Terraform - ./private/${NETWORK_NAME}/${CLUSTER_NAME}"
 
-git pull origin main
-git push origin main
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+git pull origin "$BRANCH"
+git push origin "$BRANCH"
 
 exit $TERRAFORM_RUN_EXIT_CODE

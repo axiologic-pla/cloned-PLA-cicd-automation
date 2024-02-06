@@ -89,7 +89,4 @@ TERRAFORM_RUN_EXIT_CODE=$(echo $?)
 mv terraform.tfvars ${BACKEND_CONFIG_DIRECTORY_PATH}/terraform/${DEPLOYMENT_NAME}/terraform.tfvars
 terraform state pull > ${BACKEND_CONFIG_DIRECTORY_PATH}/terraform/${DEPLOYMENT_NAME}/terraform.tfstate
 
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
-echo "$BRANCH"
-
 exit $TERRAFORM_RUN_EXIT_CODE
