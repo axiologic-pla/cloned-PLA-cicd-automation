@@ -1,5 +1,0 @@
-use_case:
-  updatePartnersInfo:
-    enabled: true
-    peers: [
-     ]
