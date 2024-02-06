@@ -106,22 +106,22 @@ resource "aws_s3_object" "jpg" {
 resource "aws_s3_object" "gif" {
   for_each = fileset("${path.module}/LWA", "**/*.gif")
 
-  bucket       = module.s3_bucket.s3_bucket_id
-  key          = each.value
-  source       = "${path.module}/LWA/${each.value}"
-  etag         = filemd5("${path.module}/LWA/${each.value}")
-  content_type = "image/gif"
+  bucket        = module.s3_bucket.s3_bucket_id
+  key           = each.value
+  source        = "${path.module}/LWA/${each.value}"
+  etag          = filemd5("${path.module}/LWA/${each.value}")
+  content_type  = "image/gif"
   cache_control = "max-age=0, must-revalidate"
 }
 
 resource "aws_s3_object" "ico" {
   for_each = fileset("${path.module}/LWA", "**/*.ico")
 
-  bucket       = module.s3_bucket.s3_bucket_id
-  key          = each.value
-  source       = "${path.module}/LWA/${each.value}"
-  etag         = filemd5("${path.module}/LWA/${each.value}")
-  content_type = "image/x-icon"
+  bucket        = module.s3_bucket.s3_bucket_id
+  key           = each.value
+  source        = "${path.module}/LWA/${each.value}"
+  etag          = filemd5("${path.module}/LWA/${each.value}")
+  content_type  = "image/x-icon"
   cache_control = "max-age=2629800, must-revalidate"
 }
 
