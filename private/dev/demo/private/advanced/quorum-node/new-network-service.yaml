@@ -1,0 +1,27 @@
+use_case:
+  joinNetwork:
+    enabled: false
+  newNetwork:
+    enabled: true
+    plugin_data_common: >-
+      {"extradata":"0x0000000000000000000000000000000000000000000000000000000000000000d8d594b660908bcbf66b50b3e73dd9a5a103c2affec53380c0","enode":"f696f683e835d0813b8caa72397b5d619cb8642294b0b77f24e98d95fe9dadbb76837e3f3422bb8141daabd4464bb3017fe3f6e65963e2a8a9c6bf1184d085d4","nodeKeyPublic":"0xb660908bcBF66B50b3e73DD9A5A103c2afFEc533","genesisAccount":"0xb4ade0d151b15cb86b0172376b699930fb6d9a91"}
+
+    plugin_data_secrets: >-
+      {"nodeKey":"7a428d29b937ad72f914f55c1f80c91217be32f9ca125b4f016c00458cb246f0","genesisKeyStoreAccount":"eyJhZGRyZXNzIjoiYjRhZGUwZDE1MWIxNWNiODZiMDE3MjM3NmI2OTk5MzBmYjZkOWE5MSIsImNyeXB0byI6eyJjaXBoZXIiOiJhZXMtMTI4LWN0ciIsImNpcGhlcnRleHQiOiJkY2VlM2Y4ZjQ4NWRlOWY4ZTMzN2U4MjY4OTI3MmRkMzEzNjkxYzViNjdiYTA5ZDcxZjBhNzUyOWFlZGU2OWE5IiwiY2lwaGVycGFyYW1zIjp7Iml2IjoiZTYzMmE0ZmI4ZTk3ZmY4NzFmYWMxMTIxZTMzZmI2ZWUifSwibWFjIjoiNjY2NDY5YWFkZjg0ZTIwZjFkNGNhZmMyYzAxYzhhMmVkMDY4MjUzOTVmMjk4YTliNzI5ZjYwMjUyZGU3NTEwYSIsImtkZiI6InNjcnlwdCIsImtkZnBhcmFtcyI6eyJka2xlbiI6MzIsIm4iOjI2MjE0NCwiciI6OCwicCI6MSwic2FsdCI6IjhkMTNiZTJjZWQ2ZDA0MTAyODJjYjdlMmExOTJhOWQ4MDAzMzAxYWM0NmJhNzEzNmQ4ZTNlZTA1NzA5ODkxMzIifX0sImlkIjoiMDViMDE4NzgtMGZlOC00MTU5LTk4YjAtZjYzY2NjYmJjMTI0IiwidmVyc2lvbiI6M30=","genesisKeyStoreAccountEncryptionPassword":"md6KunL3gnYKsL5ToVm9","genesisAccountPrivateKey":{"type":"Buffer","data":[183,68,231,131,29,84,112,198,79,3,223,29,91,209,53,52,1,249,166,215,140,174,241,94,223,237,251,207,75,255,138,240]}}
+
+service:
+  p2p:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true,deletion_protection.enabled=false
+      service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eipalloc-08efd6e5ebf6e7afb
+      service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0bd9dcc08f2565969
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "2"
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "2"
+      service.beta.kubernetes.io/aws-load-balancer-ip-address-type: ipv4
+      service.beta.kubernetes.io/aws-load-balancer-name: dev-demo-quorum-node-qn-0
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+      service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+      service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=true,deregistration_delay.timeout_seconds=120,deregistration_delay.connection_termination.enabled=true,stickiness.enabled=true,stickiness.type=source_ip
+      service.beta.kubernetes.io/aws-load-balancer-type: external
+      

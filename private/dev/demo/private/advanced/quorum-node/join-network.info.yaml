@@ -1,0 +1,26 @@
+use_case:
+  newNetwork:
+    enabled: false
+  joinNetwork:
+    enabled: true
+    plugin_data_common: >-
+      {"enode":"b05c974670f133e9bba05539cedbf8ce024f0c9b535fb10b1023588b9511258bb88eb40785b6ece7d9393e5026fbb968dd4e725145b7fd605c5651c03a178a00","nodeKeyPublic":"0x9D0018A2C722b1f38e0eaF3ee558E31D5DFDB9Aa","genesis":"404: Not Found"}
+
+    plugin_data_secrets: >-
+      {"nodeKey":"28850e8fba7803356d36ff4a9d5a0813a6348ef0c8cdb1deee4d78dff1a6a25b"}
+
+service:
+  p2p:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true,deletion_protection.enabled=false
+      service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eipalloc-08efd6e5ebf6e7afb
+      service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0bd9dcc08f2565969
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "2"
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "2"
+      service.beta.kubernetes.io/aws-load-balancer-ip-address-type: ipv4
+      service.beta.kubernetes.io/aws-load-balancer-name: dev-demo-quorum-node-qn-0
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+      service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+      service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=true,deregistration_delay.timeout_seconds=120,deregistration_delay.connection_termination.enabled=true,stickiness.enabled=true,stickiness.type=source_ip
+      service.beta.kubernetes.io/aws-load-balancer-type: external
