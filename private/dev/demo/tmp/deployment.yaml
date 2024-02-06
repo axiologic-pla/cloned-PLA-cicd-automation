@@ -1,4 +1,0 @@
-deployment: 
-  company: "demo"
-  network_name: "dev"
-  enode_address: "63.34.141.167"
