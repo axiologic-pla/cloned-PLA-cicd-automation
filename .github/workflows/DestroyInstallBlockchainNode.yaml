@@ -11,6 +11,16 @@ on:
         description: 'Enter the name of your cluster'
         required: true
         type: string
+  workflow_call:
+    inputs:
+      networkName:
+        description: 'Enter the network name'
+        required: true
+        type: string
+      clusterName:
+        description: 'Enter the name of your cluster'
+        required: true
+        type: string
 
 env:
   CICD_DEPLOYMENT_NAME: "4-quorum-node-pla"
@@ -26,8 +36,8 @@ env:
 
   AWS_IAM_ROLE_ARN_TO_ASSUME: ${{ secrets.AWS_IAM_ROLE_ARN_TO_ASSUME }}
 
-  NETWORK_NAME: ${{ github.event.inputs.networkName }}
-  CLUSTER_NAME: ${{ github.event.inputs.clusterName }}
+  NETWORK_NAME: ${{ inputs.networkName }}
+  CLUSTER_NAME: ${{ inputs.clusterName }}
 
   HELM_PL_PLUGIN_REPOSITORY_URL: ${{ vars.HELM_PL_PLUGIN_REPOSITORY_URL }}
 
@@ -92,4 +102,5 @@ jobs:
            "${{ env.CICD_DEPLOYMENT_TOKEN }}" \
            "${{ env.GIT_USERNAME }}" \
            "${{ env.GIT_EMAIL }}" \
-           "${{ env.QUORUM_NODE_HELM_CHART_VERSION }}"
+           "${{ env.QUORUM_NODE_HELM_CHART_VERSION }}" \
+           "${{ github.repository_owner }}"

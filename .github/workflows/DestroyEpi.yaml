@@ -11,6 +11,48 @@ on:
         description: 'Enter the name of your cluster'
         required: true
         type: string
+      dnsName:
+        description: 'Enter the EPI DNS name'
+        required: true
+        type: string
+      domain:
+        description: 'Enter the domain'
+        required: true
+        type: string
+      subDomain:
+        description: 'Enter the sub domain'
+        required: true
+        type: string
+      vaultDomain:
+        description: 'Enter the vault domain'
+        required: true
+        type: string
+      epiRunnerVersion:
+        description: 'Enter EPI runner version'
+        required: true
+        type: string
+      epiRunnerVersionSHA:
+        description: 'Enter EPI runner version SHA'
+        required: true
+        type: string
+      epiBuilderVersion:
+        description: 'Enter EPI builder version'
+        required: true
+        type: string
+      epiBuilderVersionSHA:
+        description: 'Enter EPI builder version SHA'
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      networkName:
+        description: 'Enter the network name'
+        required: true
+        type: string
+      clusterName:
+        description: 'Enter the name of your cluster'
+        required: true
+        type: string
 
 env:
   CICD_DEPLOYMENT_NAME: "6-epi-app-deployment-pla"
@@ -26,8 +68,8 @@ env:
   AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
   AWS_IAM_ROLE_ARN_TO_ASSUME: ${{ vars.AWS_IAM_ROLE_ARN_TO_ASSUME }}
 
-  NETWORK_NAME: ${{ github.event.inputs.networkName }}
-  CLUSTER_NAME: ${{ github.event.inputs.clusterName }}
+  NETWORK_NAME: ${{ inputs.networkName }}
+  CLUSTER_NAME: ${{ inputs.clusterName }}
 
   HELM_PL_PLUGIN_REPOSITORY_URL: ${{ vars.HELM_PL_PLUGIN_REPOSITORY_URL }}
 
@@ -90,8 +132,22 @@ jobs:
           path: "./automation"
           ref: ${{ env.CICD_AUTOMATION_BRANCH }}
       
-      - name: 'Set env AWS_REGION'
-        run: echo "AWS_REGION=$(cat ./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/region)" >> $GITHUB_ENV
+      - name: 'Set env variables'
+        run: |
+          TFSTATE_PATH="./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/terraform/${{ env.CICD_DEPLOYMENT_NAME }}/terraform.tfstate"
+          EPI_INFO_PATH="./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/private/epi.info.yaml"
+          
+          echo "AWS_REGION=$(cat ./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/region)" >> $GITHUB_ENV
+          
+          echo "DNS_NAME=$(jq -r '.resources[] | select(.type=="aws_acm_certificate" and .name=="epi") | .instances[0].attributes.domain_name' "$TFSTATE_PATH")" >> $GITHUB_ENV
+          echo "DOMAIN=$(yq e '.config.domain' $EPI_INFO_PATH)" >> $GITHUB_ENV
+          echo "SUB_DOMAIN=$(yq e '.config.subDomain' $EPI_INFO_PATH)" >> $GITHUB_ENV
+          echo "VAULT_DOMAIN=$(yq e '.config.vaultDomain' $EPI_INFO_PATH)" >> $GITHUB_ENV
+               
+          echo "EPI_RUNNER_VERSION=$(yq e '.runner.image.tag' $EPI_INFO_PATH)" >> $GITHUB_ENV
+          echo "EPI_RUNNER_VERSION_SHA=$(yq e '.runner.image.sha' $EPI_INFO_PATH)" >> $GITHUB_ENV
+          echo "EPI_BUILDER_VERSION=$(yq e '.builder.image.tag' $EPI_INFO_PATH)" >> $GITHUB_ENV
+          echo "EPI_BUILDER_VERSION_SHA=$(yq e '.builder.image.sha' $EPI_INFO_PATH)" >> $GITHUB_ENV
 
       - name: 'Configure AWS Credentials Action For GitHub Actions'
         uses: aws-actions/configure-aws-credentials@v3
@@ -118,7 +174,7 @@ jobs:
         run: |
           cd ./automation/deployments/terraform/${{ env.CICD_DEPLOYMENT_NAME }}
          
-          /bin/bash terraform.sh destroy \
+          /bin/bash terraform.sh destroy -lock=false \
             "${{ env.AWS_ACCOUNT_ID }}" \
             "${{ env.NETWORK_NAME }}" \
             "${{ env.CLUSTER_NAME }}" \
@@ -148,7 +204,9 @@ jobs:
             "${{ env.TOKEN_ENDPOINT }}" \
             "${{ env.LOGOUT_URL }}" \
             "${{ env.CLIENT_ID }}" \
-            "${{ env.CLIENT_SECRET }}"
+            "${{ env.CLIENT_SECRET }}" \
+            "${{ github.repository_owner }}" \
+            "${{ env.HELM_CHARTS_BRANCH }}"
 
       - name: 'Git Commit & Push'
         run: |
