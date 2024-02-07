@@ -105,6 +105,7 @@ organization = "${ORGANIZATION}"
 helm_charts_branch = "${HELM_CHARTS_BRANCH}"
 EOF
 
+cat "${AWS_REGION}"
 terraform init -reconfigure \
   -backend-config="bucket=tf-state-${AWS_REGION}-${AWS_ACCOUNT_ID}" \
   -backend-config="key=${NETWORK_NAME}/${CLUSTER_NAME}/${DEPLOYMENT_NAME}/terraform.tfstate" \
