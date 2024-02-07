@@ -120,6 +120,12 @@ then
   mv ${BACKEND_CONFIG_DIRECTORY_PATH}/terraform/${DEPLOYMENT_NAME}/terraform.tfvars terraform.tfvars
 fi
 
+if [[ $ACTION == "destroy" ]]; then
+  terraform "$ACTION" --auto-approve -lock=false
+else
+  terraform "$ACTION" --auto-approve
+fi
+
 terraform $ACTION --auto-approve
 
 TERRAFORM_RUN_EXIT_CODE=$(echo $?)
