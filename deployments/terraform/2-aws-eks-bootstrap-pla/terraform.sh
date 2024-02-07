@@ -82,7 +82,7 @@ then
   mv ${BACKEND_CONFIG_DIRECTORY_PATH}/terraform/terraform.tfvars terraform.tfvars
 fi
 
-terraform $ACTION --auto-approve
+terraform $ACTION --auto-approve -lock=false
 
 TERRAFORM_RUN_EXIT_CODE=$(echo $?)
 

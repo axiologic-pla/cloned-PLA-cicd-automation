@@ -59,11 +59,11 @@ then
   rm -f ${BACKEND_CONFIG_DIRECTORY_PATH}/region
 fi
 
-terraform $ACTION --auto-approve
+terraform $ACTION --auto-approve -lock=false
 
 aws eks update-kubeconfig --region $AWS_REGION --name "${NETWORK_NAME}-${CLUSTER_NAME}"
 
-terraform $ACTION --auto-approve
+terraform $ACTION --auto-approve -lock=false
 
 TERRAFORM_RUN_EXIT_CODE=$(echo $?)
 

@@ -49,8 +49,6 @@ CLIENT_SECRET="${31}"
 ORGANIZATION="${32}"
 HELM_CHARTS_BRANCH="${33}"
 
-AWS_REGION="${34}"
-
 DEPLOYMENT_NAME="6-epi-app-deployment-pla"
 
 KUBE_CONFIG_PATH="~/.kube/config"
@@ -58,7 +56,7 @@ KUBE_CONFIG_PATH="~/.kube/config"
 BACKEND_CONFIG_DIRECTORY_PATH="../../../../private/${NETWORK_NAME}/${CLUSTER_NAME}"
 NETWORKS_CONFIG_DIRECTORY_PATH="../../../../networks"
 
-#AWS_REGION="$(cat ${BACKEND_CONFIG_DIRECTORY_PATH}/region)"
+AWS_REGION="$(cat ${BACKEND_CONFIG_DIRECTORY_PATH}/region)"
 
 git config --global user.name $GIT_USERNAME
 git config --global user.email $GIT_EMAIL
@@ -105,7 +103,6 @@ organization = "${ORGANIZATION}"
 helm_charts_branch = "${HELM_CHARTS_BRANCH}"
 EOF
 
-cat "${AWS_REGION}"
 terraform init -reconfigure \
   -backend-config="bucket=tf-state-${AWS_REGION}-${AWS_ACCOUNT_ID}" \
   -backend-config="key=${NETWORK_NAME}/${CLUSTER_NAME}/${DEPLOYMENT_NAME}/terraform.tfstate" \
@@ -118,12 +115,6 @@ aws eks update-kubeconfig --region $AWS_REGION --name "${NETWORK_NAME}-${CLUSTER
 if [[ $ACTION == "destroy" ]] && [[ -f ${BACKEND_CONFIG_DIRECTORY_PATH}/terraform/${DEPLOYMENT_NAME}/terraform.tfvars ]];
 then
   mv ${BACKEND_CONFIG_DIRECTORY_PATH}/terraform/${DEPLOYMENT_NAME}/terraform.tfvars terraform.tfvars
-fi
-
-if [[ $ACTION == "destroy" ]]; then
-  terraform "$ACTION" --auto-approve -lock=false
-else
-  terraform "$ACTION" --auto-approve
 fi
 
 terraform $ACTION --auto-approve
