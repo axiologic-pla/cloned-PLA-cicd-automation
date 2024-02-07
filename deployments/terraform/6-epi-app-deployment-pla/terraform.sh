@@ -49,6 +49,8 @@ CLIENT_SECRET="${31}"
 ORGANIZATION="${32}"
 HELM_CHARTS_BRANCH="${33}"
 
+AWS_REGION="${34}"
+
 DEPLOYMENT_NAME="6-epi-app-deployment-pla"
 
 KUBE_CONFIG_PATH="~/.kube/config"
@@ -56,7 +58,7 @@ KUBE_CONFIG_PATH="~/.kube/config"
 BACKEND_CONFIG_DIRECTORY_PATH="../../../../private/${NETWORK_NAME}/${CLUSTER_NAME}"
 NETWORKS_CONFIG_DIRECTORY_PATH="../../../../networks"
 
-AWS_REGION="$(cat ${BACKEND_CONFIG_DIRECTORY_PATH}/region)"
+#AWS_REGION="$(cat ${BACKEND_CONFIG_DIRECTORY_PATH}/region)"
 
 git config --global user.name $GIT_USERNAME
 git config --global user.email $GIT_EMAIL
