@@ -47,3 +47,8 @@ variable "auth_accounts" {
   type    = list(string)
   default = []
 }
+
+variable "node_group_desired_replicas" {
+  type = number
+  default = 1
+}

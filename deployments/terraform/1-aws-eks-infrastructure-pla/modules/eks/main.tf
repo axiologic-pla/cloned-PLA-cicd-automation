@@ -60,9 +60,9 @@ module "eks" {
     default-1a = {
       subnet_ids = [var.subnet_nodes_ids[0]]
 
-      min_size     = 0
+      min_size     = 1
       max_size     = 3
-      desired_size = 2
+      desired_size = var.node_group_desired_replicas
 
       tags = {
         Name    = "${var.network_name}-${var.cluster_name}-${data.aws_region.main.name}a"

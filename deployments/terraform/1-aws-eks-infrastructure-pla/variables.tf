@@ -52,3 +52,6 @@ variable "instance_type" {
   type    = string
   default = "t3.xlarge"
 }
+variable "node_group_desired_replicas" {
+  type = number
+}

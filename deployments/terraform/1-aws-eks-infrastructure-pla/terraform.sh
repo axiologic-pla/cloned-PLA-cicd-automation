@@ -20,6 +20,7 @@ EKS_AUTH_ROLES="${11}"
 EKS_AUTH_ACCOUNTS="${12}"
 
 INSTANCE_TYPE="${13}"
+NODE_GROUP_DESIRED_REPLICAS="${14}"
 
 DEPLOYMENT_NAME="1-aws-eks-infrastructure-pla"
 
@@ -44,6 +45,7 @@ eks_auth_users = $EKS_AUTH_USERS
 eks_auth_roles = $EKS_AUTH_ROLES
 eks_auth_accounts = $EKS_AUTH_ACCOUNTS
 instance_type = "${INSTANCE_TYPE}"
+node_group_desired_replicas = $NODE_GROUP_DESIRED_REPLICAS
 EOF
 
 terraform init -reconfigure \
