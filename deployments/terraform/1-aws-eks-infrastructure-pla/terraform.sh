@@ -43,7 +43,7 @@ backend_config_directory_path = "${BACKEND_CONFIG_DIRECTORY_PATH}"
 eks_auth_users = $EKS_AUTH_USERS
 eks_auth_roles = $EKS_AUTH_ROLES
 eks_auth_accounts = $EKS_AUTH_ACCOUNTS
-instance_type = $INSTANCE_TYPE
+instance_type = "${INSTANCE_TYPE}"
 EOF
 
 terraform init -reconfigure \
