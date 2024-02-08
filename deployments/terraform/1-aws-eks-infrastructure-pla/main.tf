@@ -22,7 +22,7 @@ module "eks" {
   subnet_nodes_ids        = module.vpc.subnet_private_eks_nodegroup_ids
 
   cluster_version = var.cluster_version
-  instance_type   = "t3.xlarge"
+  instance_type   = var.instance_type
 
   auth_users    = var.eks_auth_users
   auth_roles    = var.eks_auth_roles

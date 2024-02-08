@@ -19,6 +19,8 @@ EKS_AUTH_USERS="${10}"
 EKS_AUTH_ROLES="${11}"
 EKS_AUTH_ACCOUNTS="${12}"
 
+INSTANCE_TYPE="${13}"
+
 DEPLOYMENT_NAME="1-aws-eks-infrastructure-pla"
 
 KUBE_CONFIG_PATH="~/.kube/config"
@@ -38,9 +40,10 @@ cluster_name = "${CLUSTER_NAME}"
 cluster_version = "${CLUSTER_VERSION}"
 kube_config_path = "${KUBE_CONFIG_PATH}"
 backend_config_directory_path = "${BACKEND_CONFIG_DIRECTORY_PATH}"
-eks_auth_users = $EKS_AUTH_USERS
-eks_auth_roles = $EKS_AUTH_ROLES
-eks_auth_accounts = $EKS_AUTH_ACCOUNTS
+eks_auth_users = "${EKS_AUTH_USERS}"
+eks_auth_roles = "${EKS_AUTH_ROLES}"
+eks_auth_accounts = "${EKS_AUTH_ACCOUNTS}"
+instance_type = "${INSTANCE_TYPE}"
 EOF
 
 terraform init -reconfigure \
