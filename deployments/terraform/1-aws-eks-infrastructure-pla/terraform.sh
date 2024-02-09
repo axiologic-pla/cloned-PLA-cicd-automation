@@ -45,7 +45,7 @@ eks_auth_users = $EKS_AUTH_USERS
 eks_auth_roles = $EKS_AUTH_ROLES
 eks_auth_accounts = $EKS_AUTH_ACCOUNTS
 instance_type = "${INSTANCE_TYPE}"
-node_group_desired_replicas = $NODE_GROUP_DESIRED_REPLICAS
+node_group_desired_replicas = ${NODE_GROUP_DESIRED_REPLICAS}
 EOF
 
 terraform init -reconfigure \
