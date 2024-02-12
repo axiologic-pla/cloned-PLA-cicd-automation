@@ -119,8 +119,6 @@ fi
 
 terraform $ACTION --auto-approve
 
-ls -al
-
 TERRAFORM_RUN_EXIT_CODE=$(echo $?)
 
 mv terraform.tfvars ${BACKEND_CONFIG_DIRECTORY_PATH}/terraform/${DEPLOYMENT_NAME}/terraform.tfvars
