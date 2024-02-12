@@ -118,7 +118,8 @@ then
 fi
 
 terraform $ACTION --auto-approve
-cat ../../../../private/tst/test1/private/advanced/ethadapter/my-values.yaml
+
+ls -al
 
 TERRAFORM_RUN_EXIT_CODE=$(echo $?)
 
