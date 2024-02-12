@@ -10,7 +10,7 @@ data "http" "eth_values_yaml" {
 resource "local_file" "eth_values_yaml" {
   filename = local.eth_values_path
 
-  content = contains(data.http.eth_values_yaml.response_body, "061089524335.dkr.ecr.eu-west-1.amazonaws.com/ethadapter") ? replace(
+  content = contains(data.http.eth_values_yaml.response_body, ["061089524335.dkr.ecr.eu-west-1.amazonaws.com/ethadapter"]) ? replace(
     data.http.eth_values_yaml.response_body,
     "061089524335.dkr.ecr.eu-west-1.amazonaws.com/ethadapter",
     var.ethadapter_image_repository
