@@ -48,7 +48,7 @@ variable "auth_accounts" {
   default = []
 }
 
-variable "node_group_desired_replicas" {
+variable "node_group_desired_size" {
   type = number
   default = 1
 }

@@ -23,7 +23,7 @@ module "eks" {
 
   cluster_version = var.cluster_version
   instance_type   = var.instance_type
-  node_group_desired_replicas = var.node_group_desired_replicas
+  node_group_desired_replicas = var.node_group_desired_size
 
   auth_users    = var.eks_auth_users
   auth_roles    = var.eks_auth_roles
