@@ -60,7 +60,7 @@ module "eks" {
     default-1a = {
       subnet_ids = [var.subnet_nodes_ids[0]]
 
-      min_size     = 1
+      min_size     = 0
       max_size     = 3
       desired_size = var.node_group_desired_size
 
