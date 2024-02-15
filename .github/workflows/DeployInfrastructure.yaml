@@ -15,6 +15,14 @@ on:
         description: 'Enter the region where the cluster is created'
         required: true
         type: string
+      instanceType:
+        description: 'Enter the performance type of the cluster'
+        required: true
+        type: choice
+        options:
+          - t3.xlarge
+          - t3.large
+          - t3.medium
 
 env:
   CICD_DEPLOYMENT_NAME: "1-aws-eks-infrastructure-pla"
@@ -33,10 +41,13 @@ env:
   AWS_EKS_AUTH_USERS: ${{ vars.AWS_EKS_AUTH_USERS }}
   AWS_EKS_AUTH_ACCOUNTS: ${{ vars.AWS_EKS_AUTH_ACCOUNTS }}
 
-  NETWORK_NAME: ${{ github.event.inputs.networkName }}
+  NETWORK_NAME: ${{ inputs.networkName }}
+  CLUSTER_NAME: ${{ inputs.clusterName }}
 
-  CLUSTER_NAME: ${{ github.event.inputs.clusterName }}
   CLUSTER_VERSION: ${{ vars.AWS_EKS_CLUSTER_VERSION }}
+
+  INSTANCE_TYPE: ${{ inputs.instanceType }}
+  NODE_GROUP_DESIRED_SIZE: ${{ vars.NODE_GROUP_DESIRED_SIZE }}
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -94,7 +105,9 @@ jobs:
             "${{ env.GIT_EMAIL }}" \
             "${{ env.AWS_EKS_AUTH_USERS }}" \
             "${{ env.AWS_EKS_AUTH_ROLES }}" \
-            "${{ env.AWS_EKS_AUTH_ACCOUNTS }}"
+            "${{ env.AWS_EKS_AUTH_ACCOUNTS }}" \
+            "${{ env.INSTANCE_TYPE }}" \
+            "${{ env.NODE_GROUP_DESIRED_SIZE }}"
 
       - name: 'Git Commit & Push'
         run: |

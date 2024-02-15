@@ -1,0 +1,109 @@
+name: 'Destroy All'
+
+on:
+  workflow_dispatch:
+    inputs:
+      networkName:
+        description: 'Enter the network name'
+        required: true
+        type: string
+      clusterName:
+        description: 'Enter the name of your cluster'
+        required: true
+        type: string
+      destroyEpi:
+        description: 'Destroy ePI?'
+        required: false
+        type: boolean
+      destroyBlockchainNode:
+        description: 'Destroy Blockchain Node?'
+        required: false
+        type: boolean
+      destroyInitializeEnvironment:
+        description: 'Destroy Initialize Environment?'
+        required: false
+        type: boolean
+      destroyBootstrap:
+        description: 'Destroy Bootstrap?'
+        required: false
+        type: boolean
+      destroyInfrastructure:
+        description: 'Destroy Infrastructure?'
+        required: false
+        type: boolean
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+jobs:
+  networkAndClusterName:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: "Given name of network and cluster from input"
+      run: echo "# ${{ inputs.networkName }}-${{ inputs.clusterName }}" > $GITHUB_STEP_SUMMARY
+
+  destroyEpi:
+    if: ${{ github.event.inputs.destroyEpi == 'true' }}
+    name: 'Destroy ePI'
+    uses: ./.github/workflows/DestroyEpi.yaml
+    with:
+      networkName: ${{ inputs.networkName }}
+      clusterName: ${{ inputs.clusterName }}
+      called_from_workflow: true
+    secrets: inherit
+
+  destroyBlockchainNode:
+    if: ${{ github.event.inputs.destroyBlockchainNode == 'true' }}
+    name: 'Destroy Blockchain Node'
+    uses: ./.github/workflows/DestroyInstallBlockchainNode.yaml
+    with:
+      networkName: ${{ inputs.networkName }}
+      clusterName: ${{ inputs.clusterName }}
+    secrets: inherit
+
+  destroyInitializeEnvironment:
+    needs: [destroyEpi, destroyBlockchainNode]
+    if: |
+      github.event.inputs.destroyInitializeEnvironment == 'true' &&
+      always() &&
+      (needs.destroyEpi.result == 'success' || needs.destroyEpi.result == 'skipped') &&
+      (needs.destroyBlockchainNode.result == 'success' || needs.destroyBlockchainNode.result == 'skipped')
+    name: 'Destroy Initialize Environment'
+    uses: ./.github/workflows/DestroyInitializeEnvironment.yaml
+    with:
+      networkName: ${{ inputs.networkName }}
+      clusterName: ${{ inputs.clusterName }}
+    secrets: inherit
+
+  destroyBootstrap:
+    needs: [destroyEpi, destroyBlockchainNode]
+    if: |
+      github.event.inputs.destroyBootstrap == 'true' &&
+      always() &&
+      (needs.destroyEpi.result == 'success' || needs.destroyEpi.result == 'skipped') &&
+      (needs.destroyBlockchainNode.result == 'success' || needs.destroyBlockchainNode.result == 'skipped')
+    name: 'Destroy Bootstrap'
+    uses: ./.github/workflows/DestroyBootstrapInfrastructure.yaml
+    with:
+      networkName: ${{ inputs.networkName }}
+      clusterName: ${{ inputs.clusterName }}
+    secrets: inherit
+
+  destroyInfrastructure:
+    needs: [destroyEpi, destroyBlockchainNode, destroyInitializeEnvironment, destroyBootstrap]
+    if: |
+      github.event.inputs.destroyInfrastructure == 'true' &&
+      always() &&
+      (needs.destroyEpi.result == 'success' || needs.destroyEpi.result == 'skipped') &&
+      (needs.destroyBlockchainNode.result == 'success' || needs.destroyBlockchainNode.result == 'skipped') &&
+      (needs.destroyInitializeEnvironment.result == 'success' || needs.destroyInitializeEnvironment.result == 'skipped')
+    name: 'Destroy Infrastructure'
+    uses: ./.github/workflows/DestroyInfrastructure.yaml
+    with:
+      networkName: ${{ inputs.networkName }}
+      clusterName: ${{ inputs.clusterName }}
+    secrets: inherit

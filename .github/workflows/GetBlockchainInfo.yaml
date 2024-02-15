@@ -26,8 +26,8 @@ env:
 
   AWS_IAM_ROLE_ARN_TO_ASSUME: ${{ secrets.AWS_IAM_ROLE_ARN_TO_ASSUME }}
 
-  NETWORK_NAME: ${{ github.event.inputs.networkName }}
-  CLUSTER_NAME: ${{ github.event.inputs.clusterName }}
+  NETWORK_NAME: ${{ inputs.networkName }}
+  CLUSTER_NAME: ${{ inputs.clusterName }}
 
 jobs:
   getBlockchainInfo:

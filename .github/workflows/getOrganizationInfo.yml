@@ -1,0 +1,21 @@
+name: Get Organization Info
+
+on:
+  workflow_dispatch:
+    inputs:
+      outputFileName:
+        type: string
+        description: 'Enter how the output file should be called.'
+        required: true
+        default: 'AuditResult'
+  
+jobs:
+  get_information:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Organization Info
+        uses: axiologic-pla/marketplaceActions/organizationAudit@main
+        with:
+         secretToken: ${{ secrets.CICD_DEPLOYMENT_TOKEN }}
+         outputFileName: ${{ github.event.inputs.outputFileName }}

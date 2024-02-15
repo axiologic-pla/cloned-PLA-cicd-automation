@@ -11,6 +11,16 @@ on:
         description: 'Enter the name of your cluster'
         required: true
         type: string
+  workflow_call:
+    inputs:
+      networkName:
+        description: 'Enter the network name'
+        required: true
+        type: string
+      clusterName:
+        description: 'Enter the name of your cluster'
+        required: true
+        type: string
 
 env:
   CICD_DEPLOYMENT_NAME: "2-aws-eks-bootstrap-pla"
@@ -25,8 +35,8 @@ env:
   AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
   AWS_IAM_ROLE_ARN_TO_ASSUME: ${{ vars.AWS_IAM_ROLE_ARN_TO_ASSUME }}
 
-  NETWORK_NAME: ${{ github.event.inputs.networkName }}
-  CLUSTER_NAME: ${{ github.event.inputs.clusterName }}
+  NETWORK_NAME: ${{ inputs.networkName }}
+  CLUSTER_NAME: ${{ inputs.clusterName }}
 
   VPC_CNI_VERSION: ${{ vars.VPC_CNI_VERSION }}
   KUBE_PROXY_VERSION: ${{ vars.KUBE_PROXY_VERSION }}
@@ -80,6 +90,15 @@ jobs:
         uses: hashicorp/setup-terraform@v2.0.3
         with:
           terraform_version: 1.5.7
+
+      - name: 'Delete snapscheduler if it exists'
+        run: |
+          aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.NETWORK_NAME }}-${{ env.CLUSTER_NAME }}
+          if kubectl get ns snapscheduler; then
+            kubectl delete ns snapscheduler
+          else
+            echo "Namespace snapscheduler does not exist, skipping delete."
+          fi
           
       - name: 'Terraform Destroy'
         run: |

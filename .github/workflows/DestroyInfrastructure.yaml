@@ -12,7 +12,17 @@ on:
         required: true
         type: string
       region:
-        description: 'Enter the region where the cluster is created'
+        description: 'Enter the region of your cluster'
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      networkName:
+        description: 'Enter the network name'
+        required: true
+        type: string
+      clusterName:
+        description: 'Enter the name of your cluster'
         required: true
         type: string
 
@@ -33,10 +43,13 @@ env:
   AWS_EKS_AUTH_USERS: ${{ vars.AWS_EKS_AUTH_USERS }}
   AWS_EKS_AUTH_ACCOUNTS: ${{ vars.AWS_EKS_AUTH_ACCOUNTS }}
 
-  NETWORK_NAME: ${{ github.event.inputs.networkName }}
+  NETWORK_NAME: ${{ inputs.networkName }}
+  CLUSTER_NAME: ${{ inputs.clusterName }}
 
-  CLUSTER_NAME: ${{ github.event.inputs.clusterName }}
   CLUSTER_VERSION: ${{ vars.AWS_EKS_CLUSTER_VERSION }}
+
+  INSTANCE_TYPE: ${{ inputs.instanceType }}
+  NODE_GROUP_DESIRED_SIZE: ${{ vars.NODE_GROUP_DESIRED_SIZE }}
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -63,6 +76,9 @@ jobs:
           repository: ${{ env.CICD_AUTOMATION_REPO }}
           path: "./automation"
           ref: ${{ env.CICD_AUTOMATION_BRANCH }}
+
+      - name: 'Set env AWS_REGION'
+        run: echo "AWS_REGION=$(cat ./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/region)" >> $GITHUB_ENV
 
       - name: 'Configure AWS Credentials Action For GitHub Actions'
         uses: aws-actions/configure-aws-credentials@v3
@@ -94,7 +110,9 @@ jobs:
             "${{ env.GIT_EMAIL }}" \
             "${{ env.AWS_EKS_AUTH_USERS }}" \
             "${{ env.AWS_EKS_AUTH_ROLES }}" \
-            "${{ env.AWS_EKS_AUTH_ACCOUNTS }}"
+            "${{ env.AWS_EKS_AUTH_ACCOUNTS }}" \
+            "${{ env.INSTANCE_TYPE }}" \
+            "${{ env.NODE_GROUP_DESIRED_SIZE }}"
 
       - name: 'Git Commit & Push'
         run: |

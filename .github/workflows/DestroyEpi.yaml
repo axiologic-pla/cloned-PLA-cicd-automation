@@ -53,6 +53,10 @@ on:
         description: 'Enter the name of your cluster'
         required: true
         type: string
+      called_from_workflow:
+        required: false
+        type: boolean
+        default: false
 
 env:
   CICD_DEPLOYMENT_NAME: "6-epi-app-deployment-pla"
@@ -134,20 +138,23 @@ jobs:
       
       - name: 'Set env variables'
         run: |
-          TFSTATE_PATH="./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/terraform/${{ env.CICD_DEPLOYMENT_NAME }}/terraform.tfstate"
-          EPI_INFO_PATH="./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/private/epi.info.yaml"
+          if [ "${{ inputs.called_from_workflow }}" = "true" ]; then
+            TFSTATE_PATH="./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/terraform/${{ env.CICD_DEPLOYMENT_NAME }}/terraform.tfstate"
+            EPI_INFO_PATH="./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/private/epi.info.yaml"
+            
+            echo "DNS_NAME=$(jq -r '.resources[] | select(.type=="aws_acm_certificate" and .name=="epi") | .instances[0].attributes.domain_name' "$TFSTATE_PATH")" >> $GITHUB_ENV
+            
+            echo "DOMAIN=$(yq e '.config.domain' $EPI_INFO_PATH)" >> $GITHUB_ENV
+            echo "SUB_DOMAIN=$(yq e '.config.subDomain' $EPI_INFO_PATH)" >> $GITHUB_ENV
+            echo "VAULT_DOMAIN=$(yq e '.config.vaultDomain' $EPI_INFO_PATH)" >> $GITHUB_ENV
+            echo "EPI_RUNNER_VERSION=$(yq e '.runner.image.tag' $EPI_INFO_PATH)" >> $GITHUB_ENV
+                 
+            echo "EPI_RUNNER_VERSION_SHA=$(yq e '.runner.image.sha' $EPI_INFO_PATH)" >> $GITHUB_ENV
+            echo "EPI_BUILDER_VERSION=$(yq e '.builder.image.tag' $EPI_INFO_PATH)" >> $GITHUB_ENV
+            echo "EPI_BUILDER_VERSION_SHA=$(yq e '.builder.image.sha' $EPI_INFO_PATH)" >> $GITHUB_ENV
+          fi
           
           echo "AWS_REGION=$(cat ./private/${{ env.NETWORK_NAME }}/${{ env.CLUSTER_NAME }}/region)" >> $GITHUB_ENV
-          
-          echo "DNS_NAME=$(jq -r '.resources[] | select(.type=="aws_acm_certificate" and .name=="epi") | .instances[0].attributes.domain_name' "$TFSTATE_PATH")" >> $GITHUB_ENV
-          echo "DOMAIN=$(yq e '.config.domain' $EPI_INFO_PATH)" >> $GITHUB_ENV
-          echo "SUB_DOMAIN=$(yq e '.config.subDomain' $EPI_INFO_PATH)" >> $GITHUB_ENV
-          echo "VAULT_DOMAIN=$(yq e '.config.vaultDomain' $EPI_INFO_PATH)" >> $GITHUB_ENV
-               
-          echo "EPI_RUNNER_VERSION=$(yq e '.runner.image.tag' $EPI_INFO_PATH)" >> $GITHUB_ENV
-          echo "EPI_RUNNER_VERSION_SHA=$(yq e '.runner.image.sha' $EPI_INFO_PATH)" >> $GITHUB_ENV
-          echo "EPI_BUILDER_VERSION=$(yq e '.builder.image.tag' $EPI_INFO_PATH)" >> $GITHUB_ENV
-          echo "EPI_BUILDER_VERSION_SHA=$(yq e '.builder.image.sha' $EPI_INFO_PATH)" >> $GITHUB_ENV
 
       - name: 'Configure AWS Credentials Action For GitHub Actions'
         uses: aws-actions/configure-aws-credentials@v3
@@ -174,7 +181,7 @@ jobs:
         run: |
           cd ./automation/deployments/terraform/${{ env.CICD_DEPLOYMENT_NAME }}
          
-          /bin/bash terraform.sh destroy -lock=false \
+          /bin/bash terraform.sh destroy \
             "${{ env.AWS_ACCOUNT_ID }}" \
             "${{ env.NETWORK_NAME }}" \
             "${{ env.CLUSTER_NAME }}" \
