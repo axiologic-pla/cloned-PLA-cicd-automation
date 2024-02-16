@@ -42,6 +42,9 @@ env:
   HELM_PL_PLUGIN_REPOSITORY_URL: ${{ vars.HELM_PL_PLUGIN_REPOSITORY_URL }}
 
   QUORUM_NODE_HELM_CHART_VERSION: ${{ vars.QUORUM_NODE_HELM_CHART_VERSION }}
+  QUORUM_IMAGE_REPOSITORY: ${{ vars.QUORUM_IMAGE_REPOSITORY }}
+  QUORUM_IMAGE_TAG: ${{ vars.QUORUM_IMAGE_TAG }}
+  QUORUM_IMAGE_SHA: ${{ vars.QUORUM_IMAGE_SHA }}
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -103,4 +106,7 @@ jobs:
            "${{ env.GIT_USERNAME }}" \
            "${{ env.GIT_EMAIL }}" \
            "${{ env.QUORUM_NODE_HELM_CHART_VERSION }}" \
-           "${{ github.repository_owner }}"
+           "${{ github.repository_owner }}" \
+           "${{ env.QUORUM_IMAGE_REPOSITORY }}" \
+           "${{ env.QUORUM_IMAGE_TAG }}" \
+           "${{ env.QUORUM_IMAGE_SHA }}"
