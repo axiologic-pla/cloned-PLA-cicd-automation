@@ -13,10 +13,6 @@ QUORUM_NODE_HELM_CHART_VERSION="${7}"
 
 ORGANIZATION="${8}"
 
-QUORUM_IMAGE_REPOSITORY="${9}"
-QUORUM_IMAGE_TAG="${10}"
-QUORUM_IMAGE_SHA="${11}"
-
 DEPLOYMENT_NAME="4-quorum-node-pla"
 
 KUBE_CONFIG_PATH="~/.kube/config"
@@ -43,10 +39,7 @@ terraform $ACTION --auto-approve \
   -var kube_config_path="${KUBE_CONFIG_PATH}" \
   -var github_read_write_token="${GH_TOKEN}" \
   -var helm_chart_version="${QUORUM_NODE_HELM_CHART_VERSION}" \
-  -var organization="${ORGANIZATION}" \
-  -var image_repository="${QUORUM_IMAGE_REPOSITORY}" \
-  -var image_tag="${QUORUM_IMAGE_TAG}" \
-  -var image_sha="${QUORUM_IMAGE_SHA}"
+  -var organization="${ORGANIZATION}"
 
 TERRAFORM_RUN_EXIT_CODE=$(echo $?)
 
