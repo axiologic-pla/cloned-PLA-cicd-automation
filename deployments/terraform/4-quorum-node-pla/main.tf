@@ -63,23 +63,16 @@ resource "helm_release" "main" {
     file(local.qn_values_path),
     file(local.qn_info_path),
     file("${local.tmp_folder_path}/deployment.yaml"),
-    templatefile("${path.module}/templates/values.yaml.tftpl", { region_name = data.aws_region.main.name }),
     file(local.network_config_values),
+    templatefile("${path.module}/templates/values.yaml.tftpl", {
+      region_name      = data.aws_region.main.name,
+      image_repository = var.image_repository,
+      image_tag        = var.image_tag,
+      image_sha        = var.image_sha
+    }),
 
     data.local_file.secretsmanager_yaml.content
   ]
-  set {
-    name  = "image.repository"
-    value = var.image_repository
-  }
-  set {
-    name  = "image.tag"
-    value = var.image_tag
-  }
-  set {
-    name  = "image.sha"
-    value = var.image_sha
-  }
 }
 
 data "kubernetes_config_map" "main" {
