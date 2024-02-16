@@ -14,6 +14,10 @@ QUORUM_NODE_HELM_CHART_VERSION="${8}"
 
 ORGANIZATION="${9}"
 
+QUORUM_IMAGE_REPOSITORY="${10}"
+QUORUM_IMAGE_TAG="${11}"
+QUORUM_IMAGE_SHA="${12}"
+
 DEPLOYMENT_NAME="3-initialize-environment"
 
 BACKEND_CONFIG_DIRECTORY_PATH="../../../../private"
@@ -40,7 +44,10 @@ terraform $ACTION --auto-approve \
   -var github_repository_name="${GIT_REPOSITORY_NAME}" \
   -var github_read_write_token="${GH_TOKEN}" \
   -var helm_chart_version="${QUORUM_NODE_HELM_CHART_VERSION}" \
-  -var organization="${ORGANIZATION}"
+  -var organization="${ORGANIZATION}" \
+  -var image_repository="${QUORUM_IMAGE_REPOSITORY}" \
+  -var image_tag="${QUORUM_IMAGE_TAG}" \
+  -var image_sha="${QUORUM_IMAGE_SHA}"
 
 TERRAFORM_RUN_EXIT_CODE=$(echo $?)
 
