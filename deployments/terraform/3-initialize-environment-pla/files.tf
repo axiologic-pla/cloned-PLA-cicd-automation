@@ -44,11 +44,11 @@ data "http" "qn_values_yaml" {
 resource "local_file" "qn_values_yaml" {
   filename = regex("qnValuesPath=(.+)", data.local_file.config_context_sh.content)[0]
 
-  content = "${data.http.qn_values_yaml.response_body}\n${templatefile("${path.module}/templates/values.yaml.tftpl", {
+  content = "${templatefile("${path.module}/templates/values.yaml.tftpl", {
     repo = var.image_repository,
     tag  = var.image_tag,
     sha  = var.image_sha
-  })}"
+  })}\n${data.http.qn_values_yaml.response_body}"
 }
 
 resource "local_file" "network_name_yaml" {
