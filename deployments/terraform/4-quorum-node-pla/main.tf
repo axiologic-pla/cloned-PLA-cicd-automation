@@ -63,7 +63,12 @@ resource "helm_release" "main" {
     file(local.qn_values_path),
     file(local.qn_info_path),
     file("${local.tmp_folder_path}/deployment.yaml"),
-    templatefile("${path.module}/templates/values.yaml.tftpl", { region_name = data.aws_region.main.name }),
+    templatefile("${path.module}/templates/values.yaml.tftpl", {
+      region_name      = data.aws_region.main.name,
+      image_repository = var.image_repository,
+      image_tag        = var.image_tag,
+      image_sha        = var.image_sha
+    }),
     file(local.network_config_values),
 
     data.local_file.secretsmanager_yaml.content

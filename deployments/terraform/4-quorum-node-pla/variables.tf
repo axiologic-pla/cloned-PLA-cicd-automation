@@ -29,3 +29,18 @@ variable "github_read_write_token" {
 variable "organization" {
   type = string
 }
+
+variable "image_repository" {
+  type    = string
+  default = "quorumengineering/quorum"
+}
+
+variable "image_tag" {
+  type    = string
+  default = "23.4.0"
+}
+
+variable "image_sha" {
+  type    = string
+  default = "bab0a966b3dedeb102b402ba86c1fc02050416f2ce6d153356342fcc9424456e"
+}
