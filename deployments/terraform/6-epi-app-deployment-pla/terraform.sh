@@ -49,6 +49,8 @@ CLIENT_SECRET="${31}"
 ORGANIZATION="${32}"
 HELM_CHARTS_BRANCH="${33}"
 
+DEV_MODE="${34}"
+
 DEPLOYMENT_NAME="6-epi-app-deployment-pla"
 
 KUBE_CONFIG_PATH="~/.kube/config"
@@ -101,6 +103,8 @@ epi_helm_chart_version = "${EPI_HELM_CHART_VERSION}"
 
 organization = "${ORGANIZATION}"
 helm_charts_branch = "${HELM_CHARTS_BRANCH}"
+
+dev_mode = "${DEV_MODE}"
 EOF
 
 terraform init -reconfigure \

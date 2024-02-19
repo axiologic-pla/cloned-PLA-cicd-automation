@@ -106,3 +106,7 @@ variable "organization" {
 variable "helm_charts_branch" {
   type = string
 }
+variable "dev_mode" {
+  type = string
+  default = false
+}
