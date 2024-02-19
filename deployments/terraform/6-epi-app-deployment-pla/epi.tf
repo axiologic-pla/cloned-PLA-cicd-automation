@@ -75,7 +75,7 @@ resource "aws_secretsmanager_secret_version" "epi" {
     {
       "PSK_TMP_WORKING_DIR": "tmp",
       "PSK_CONFIG_LOCATION": "../apihub-root/external-volume/config",
-      "DEV": false,
+      "DEV": true,
       "VAULT_DOMAIN": "${var.vault_domain}",
       "BUILD_SECRET_KEY": "${var.build_secret_key}",
       "BDNS_ROOT_HOSTS": "http://127.0.0.1:8080",
