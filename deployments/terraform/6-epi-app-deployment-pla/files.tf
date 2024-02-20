@@ -99,6 +99,7 @@ resource "local_file" "epi_info_yaml" {
       company_name               = var.cluster_name,
       build_secret_key           = var.build_secret_key,
       sso_secrets_encryption_key = var.sso_secrets_encryption_key,
+      enclave_type                = var.enclave_type,
 
       oauth_jwks_endpoint    = var.oauth_jwks_endpoint,
       issuer                 = var.issuer,
