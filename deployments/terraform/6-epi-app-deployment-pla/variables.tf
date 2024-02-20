@@ -110,3 +110,7 @@ variable "dev_mode" {
   type = string
   default = false
 }
+variable "enclave_type" {
+  type = string
+  default = "WalletDBEnclave"
+}

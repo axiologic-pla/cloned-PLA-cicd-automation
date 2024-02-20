@@ -50,6 +50,7 @@ ORGANIZATION="${32}"
 HELM_CHARTS_BRANCH="${33}"
 
 DEV_MODE="${34}"
+ENCLAVE_TYPE="${35}"
 
 DEPLOYMENT_NAME="6-epi-app-deployment-pla"
 
@@ -105,6 +106,7 @@ organization = "${ORGANIZATION}"
 helm_charts_branch = "${HELM_CHARTS_BRANCH}"
 
 dev_mode = "${DEV_MODE}"
+enclave_type = "${ENCLAVE_TYPE}"
 EOF
 
 terraform init -reconfigure \
