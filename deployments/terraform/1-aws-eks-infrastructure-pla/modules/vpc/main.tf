@@ -87,6 +87,6 @@ resource "aws_vpc_endpoint" "s3" {
 resource "aws_flow_log" "main" {
   iam_role_arn    = aws_iam_role.main.arn
   log_destination = aws_cloudwatch_log_group.main.arn
-  traffic_type    = "ALL"
+  traffic_type    = var.network_traffic_type
   vpc_id          = aws_vpc.main.id
 }

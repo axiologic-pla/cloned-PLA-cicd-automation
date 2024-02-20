@@ -15,7 +15,7 @@ module "eks" {
 
   create_cloudwatch_log_group = true
 
-  cloudwatch_log_group_retention_in_days = 30
+  cloudwatch_log_group_retention_in_days = var.cloudwatch_log_retention
   cloudwatch_log_group_kms_key_id        = aws_kms_key.main.arn
 
   cluster_enabled_log_types = [
@@ -60,8 +60,8 @@ module "eks" {
     default-1a = {
       subnet_ids = [var.subnet_nodes_ids[0]]
 
-      min_size     = 0
-      max_size     = 3
+      min_size     = var.node_min_size
+      max_size     = var.node_max_size
       desired_size = var.node_group_desired_size
 
       tags = {
@@ -82,8 +82,8 @@ module "eks" {
             delete_on_termination = true
             encrypted             = true
             kms_key_id            = aws_kms_key.main.arn
-            volume_size           = 100
-            volume_type           = "gp3"
+            volume_size           = var.node_volume_size
+            volume_type           = var.node_volume_type
           }
         }
       }

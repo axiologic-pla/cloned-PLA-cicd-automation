@@ -16,3 +16,8 @@ variable "enable_single_natgw" {
   type    = bool
   default = true
 }
+
+variable "network_traffic_type" {
+  type = string
+  default = "ALL"
+}
