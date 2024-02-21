@@ -112,6 +112,9 @@ env:
 
   HELM_CHARTS_BRANCH: ${{ vars.HELM_CHARTS_BRANCH }}
 
+  DEV_MODE: ${{ vars.DEV_MODE }}
+  ENCLAVE_TYPE: ${{ vars.ENCLAVE_TYPE }}
+
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read  # This is required for actions/checkout
@@ -215,7 +218,9 @@ jobs:
             "${{ env.CLIENT_ID }}" \
             "${{ env.CLIENT_SECRET }}" \
             "${{ github.repository_owner }}" \
-            "${{ env.HELM_CHARTS_BRANCH }}"
+            "${{ env.HELM_CHARTS_BRANCH }}" \
+            "${{ env.DEV_MODE }}" \
+            "${{ env.ENCLAVE_TYPE }}"
 
       - name: 'Git Commit & Push'
         run: |
